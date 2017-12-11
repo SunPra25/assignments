@@ -1,0 +1,20 @@
+
+- Some sample data
+SELECT product_name, CONCAT(min_value,' to ',max_value) AS 'Quantity', price AS 'Price Per Quantity' FROM product_info pp INNER JOIN price_info pr ON (pp.pid = pr.p_id) ORDER BY product_name ASC 
+
+
+- Name of the most expensive product
+SELECT product_name, price FROM product_info pp INNER JOIN price_info pr ON (pp.pid = pr.p_id) WHERE price IN ( SELECT max(price) FROM price_info )
+
+
+- Name of the cheapest product
+SELECT product_name, price FROM product_info pp INNER JOIN price_info pr ON (pp.pid = pr.p_id) WHERE price IN ( SELECT min(price) FROM price_info )
+
+- Per item price for 75 memory cards
+SELECT pp.product_name, '75' as 'Quantity',  pr.price as 'Price Per Quantity', CONCAT(min_value,' to ',max_value) AS 'Quantity Range',(pr.price*75) as 'Total Amount' from product_info pp 
+INNER JOIN price_info pr ON (pp.pid = pr.p_id) WHERE pp.product_name = 'Memory Card' AND (pr.min_value <= 75 AND pr.max_value >= 75)
+
+
+- Per item price for 6 hammers
+SELECT pp.product_name, '6' as 'Quantity',  pr.price as 'Price Per Quantity', CONCAT(min_value,' to ',max_value) AS 'Quantity Range',(pr.price*6) as 'Total Amount' from product_info pp 
+INNER JOIN price_info pr ON (pp.pid = pr.p_id) WHERE pp.product_name = 'Hammer' AND (pr.min_value <= 6 AND pr.max_value >= 6)
